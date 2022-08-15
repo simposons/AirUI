@@ -1,4 +1,5 @@
-node_moudles
+# Dependency directory
+node_modules
 # ignore .lock
 yarn.lock
 package-lock.json
