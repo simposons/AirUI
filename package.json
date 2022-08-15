@@ -1,41 +1,58 @@
 {
-  "name": "airui",
+  "name": "AirUI",
   "version": "1.0.0",
-  "description": "vue 组件库",
-  "main": "index.js",
-    "scripts": {
-      "dev": "vant-cli dev",
-      "test": "vant-cli test",
-      "lint": "vant-cli lint",
-      "build": "vant-cli build",
-      "prepare": "husky install",
-      "release": "vant-cli release",
-      "build-site": "vant-cli build-site"
-    },
-    "nano-staged": {
-      "*.md": "prettier --write",
-      "*.{ts,tsx,js,vue,less,scss}": "prettier --write",
-      "*.{ts,tsx,js,vue}": "eslint --fix"
-    },
-    "eslintConfig": {
-      "root": true,
-      "extends": ["@vant"]
-    },
-    "prettier": {
-      "singleQuote": true
-    },
-    "browserslist": ["Chrome >= 51", "iOS >= 10"],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/chenxi-12138/AirUI.git"
+  "description": "",
+  "main": "lib/AirUI.js",
+  "style": "lib/index.css",
+  "files": [
+    "lib",
+    "es"
+  ],
+  "scripts": {
+    "dev": "vant-cli dev",
+    "test": "vant-cli test",
+    "lint": "vant-cli lint",
+    "build": "vant-cli build",
+    "release": "vant-cli release",
+    "test:coverage": "open test/coverage/index.html",
+    "build-site": "vant-cli build-site && npx gh-pages -d site-dist"
   },
-  "author": "lupeng",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/chenxi-12138/AirUI/issues"
+  "author": "",
+  "husky": {
+    "hooks": {
+      "pre-commit": "nano-staged",
+      "commit-msg": "vant-cli commit-lint"
+    }
   },
-  "homepage": "https://github.com/chenxi-12138/AirUI#readme",
+  "nano-staged": {
+    "*.{ts,tsx,js,jsx,vue}": "eslint --fix",
+    "*.{vue,css,less,scss}": "stylelint --fix"
+  },
+  "peerDependencies": {
+    "vue": "^2.6.11",
+    "vue-template-compiler": "^2.6.11"
+  },
   "devDependencies": {
-    "@vant/cli": "^4.0.3"
-  }
+    "@vant/cli": "^2.0.0",
+    "vue": "^2.6.11",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@vant"
+    ]
+  },
+  "stylelint": {
+    "extends": [
+      "@vant/stylelint-config"
+    ]
+  },
+  "prettier": {
+    "singleQuote": true
+  },
+  "browserslist": [
+    "Android >= 4.0",
+    "iOS >= 8"
+  ]
 }
