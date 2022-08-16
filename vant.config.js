@@ -34,6 +34,23 @@ module.exports = {
           },
         ],
       },
+      {
+        title: '技术记录',
+        items: [
+          {
+            path: 'jenkins',
+            title: 'jenkins 安装及配置',
+          },
+          {
+            path: 'applet',
+            title: '目前流行的小程序开发框架对比',
+          },
+          {
+            path: 'axios',
+            title: 'axios解决竞态问题',
+          },
+        ],
+      },
     ],
   },
 };
