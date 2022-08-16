@@ -5,7 +5,7 @@ module.exports = {
       preprocessor: 'sass',
     },
     site: {
-      publicPath: '/AirUI/',
+      publicPath: './',
     },
   },
   site: {
