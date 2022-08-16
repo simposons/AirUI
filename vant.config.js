@@ -38,6 +38,10 @@ module.exports = {
         title: '技术记录',
         items: [
           {
+            path: 'vant-cli',
+            title: 'vant-cli 搭建',
+          },
+          {
             path: 'jenkins',
             title: 'jenkins 安装及配置',
           },
