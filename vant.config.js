@@ -36,5 +36,11 @@ module.exports = {
       },
     ],
     hideSimulator: true,
+    versions: [
+      {
+        label: 'APP',
+        link: 'http://39.107.231.241/#/',
+      },
+    ],
   },
 };
