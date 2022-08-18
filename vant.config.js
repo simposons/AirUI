@@ -65,10 +65,10 @@ module.exports = {
     ],
     // 顶部右侧版本切换
     versions: [
-      // {
-      //   label: 'v1',
-      //   link: 'https://youzan.github.io/vant/v1/',
-      // },
+      {
+        label: 'PC',
+        link: 'http://39.107.231.241:81/#/',
+      },
     ],
     // 顶部左侧搜索
     // searchConfig:{
