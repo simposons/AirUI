@@ -4,6 +4,10 @@
 
 DemoButton 是一个示例按钮组件
 
+### 示例
+手机扫码下面二维码可以实机演示
+<demo-code compact transform inline>../qrcode/demo/showQrcode.vue</demo-code>
+
 ### 引入
 
 ```js

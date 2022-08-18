@@ -9,8 +9,11 @@ module.exports = {
     },
   },
   site: {
+    // 标题
     title: 'AirUI',
+    // 图标
     logo: 'https://fastly.jsdelivr.net/npm/@vant/assets/logo.png',
+    // 左侧导航栏配置
     nav: [
       {
         title: '开发指南',
@@ -31,6 +34,10 @@ module.exports = {
           {
             path: 'demo-button',
             title: 'DemoButton 按钮',
+          },
+          {
+            path: 'qrcode',
+            title: '二维码生成',
           },
         ],
       },
@@ -56,5 +63,25 @@ module.exports = {
         ],
       },
     ],
+    // 顶部右侧版本切换
+    versions: [
+      // {
+      //   label: 'v1',
+      //   link: 'https://youzan.github.io/vant/v1/',
+      // },
+    ],
+    // 顶部左侧搜索
+    // searchConfig:{
+
+    // },
+    // 是否隐藏移动端模拟器
+    // hideSimulator:false,
+    // 自定义手机模拟器的 iframe URL 地址。
+    // simulator:{
+    //   url:'index.html/'
+    // },
+    // 是否在 dev 时开启 vConsole 调试，用于移动端 debug。
+    // enableVConsole:true,
+
   },
 };

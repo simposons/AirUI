@@ -55,5 +55,8 @@
   "browserslist": [
     "Android >= 4.0",
     "iOS >= 8"
-  ]
+  ],
+  "dependencies": {
+    "qrcode": "^1.5.1"
+  }
 }
