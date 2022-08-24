@@ -1,5 +1,8 @@
 <template>
+<div>
     <qrcode class="qrcode" :text="url" version="4"></qrcode>
+    <div class="url">{{url}}</div>
+</div>
 </template>
 <script>
 export default {
@@ -18,7 +21,7 @@ export default {
      const url= href.split('#')
      url.splice(1,0,"mobile.html#");
      this.url=url.join('')
-     console.log(this.url)
+    //  console.log(this.url)
     },
   }
 };
@@ -29,5 +32,10 @@ export default {
     height: 150px;
     display: flex;
     justify-content: center;
+}
+.url{
+  margin-top: 30px;
+  cursor: pointer;
+  color: #1989fa;
 }
 </style>

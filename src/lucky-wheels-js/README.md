@@ -1,0 +1,45 @@
+# lucky-wheels-js 抽奖转盘 js版本
+
+### 介绍
+
+lucky-wheels-js是基于`lucky-canvas`依赖进行二次封装的组件
+
+### 示例
+手机扫码下面二维码可以实机演示
+<demo-code compact transform inline>../qrcode/demo/showQrcode.vue</demo-code>
+
+### 引入
+
+```js
+import Vue from 'vue';
+import { lucky-wheels-js } from 'AirUI';
+
+Vue.use(lucky-wheels-js);
+```
+
+## 代码演示
+
+### 基础用法
+
+
+
+## API
+
+### Props
+
+暂无
+
+### Events
+
+暂无
+
+### Slots
+
+暂无
+
+### 附录
+
+[lucky-canvas git地址](https://github.com/buuing/lucky-canvas)
+
+[lucky-canvas 中文文档](https://100px.net/)
+>`lucky-canvas`引入命令: `npm install lucky-canvas@latest`

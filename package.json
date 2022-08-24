@@ -57,6 +57,9 @@
     "iOS >= 8"
   ],
   "dependencies": {
-    "qrcode": "^1.5.1"
+    "@lucky-canvas/vue": "^0.1.11",
+    "lucky-canvas": "^1.7.27",
+    "qrcode": "^1.5.1",
+    "vconsole": "^3.14.6"
   }
 }

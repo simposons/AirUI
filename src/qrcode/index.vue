@@ -38,11 +38,9 @@ export default {
   },
   methods: {
     getQrcodeUrl() {
-      console.log('text',this.text,this.version)
       QRCode.toDataURL(this.text, { version: this.version },
         (err, url) => {
           this.url = url
-          console.log('2',err,url,this.text)
         })
     },
   }
