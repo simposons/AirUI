@@ -49,6 +49,7 @@ export default {
   },
 
   mounted() {
+    
   },
   methods: {
     eggsClick() {
@@ -93,7 +94,7 @@ export default {
 
 <style lang="scss" scoped>
 *{
-  outline: 1px solid #999;
+ // outline: 1px solid #999;
 }
 $animation1: 1.5s;
 .page {
