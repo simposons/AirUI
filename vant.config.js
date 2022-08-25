@@ -39,6 +39,14 @@ module.exports = {
             path: 'smash-golden-eggs',
             title: '砸金蛋抽奖',
           },
+          {
+            path: 'red-packet-svg',
+            title: '红包雨抽奖-svg',
+          },
+          {
+            path: 'colour-ribbon',
+            title: '彩带动画',
+          },
         ],
       },
       {
@@ -97,10 +105,10 @@ module.exports = {
       },
     ],
     links:[
-      {
-      text:'1111',
-      logo:'11111',
-      },
+      // {
+      // text:'1111',
+      // logo:'11111',
+      // },
     ],
     // 顶部左侧搜索
     // searchConfig:{

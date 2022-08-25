@@ -1,4 +1,4 @@
-# smash-golden-eggs 砸金蛋
+# red-packet-svg 红包雨 svg
 
 ### 介绍
 
@@ -11,9 +11,9 @@
 
 ```js
 import Vue from 'vue';
-import { smash-golden-eggs } from 'AirUI';
+import { redPacketSvg } from 'AirUI';
 
-Vue.use(smash-golden-eggs);
+Vue.use(redPacketSvg);
 ```
 
 ## 代码演示

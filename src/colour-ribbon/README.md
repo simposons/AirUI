@@ -1,4 +1,4 @@
-# smash-golden-eggs 砸金蛋
+# colour-ribbon 彩带
 
 ### 介绍
 
@@ -11,9 +11,9 @@
 
 ```js
 import Vue from 'vue';
-import { smash-golden-eggs } from 'AirUI';
+import { colourRibbon } from 'AirUI';
 
-Vue.use(smash-golden-eggs);
+Vue.use(colourRibbon);
 ```
 
 ## 代码演示
