@@ -1,14 +1,32 @@
 <template>
   <div>
-    <svg v-show="svgShow" class="red-packet-svg" :style="`opacity:${elOpacity}`" version="1.1"
-      xmlns="http://www.w3.org/2000/svg">
-    <div class="totalCount">{{ totalCount }}</div>
+    <svg
+      v-show="svgShow"
+      class="red-packet-svg"
+      :style="`opacity:${elOpacity}`"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      @click="svgClick"
+    >
       <template v-for="(item, index) in packetList">
-        <image :key="index" :href="item.imageLink" :id="item.key" :width="item.width" :height="item.width"
-          @click="imgClick(item, $event)" :style="`z-index${item.imageType ? '10' : '0'}`" :transform="`rotate(${item.rotate})`">
+        <image
+          class="svg_img"
+          :style="`z-index${item.imageType==='click' ? '10' : '0'};`"
+          :key="index"
+          :href="item.imageLink"
+          :id="item.key"
+          :width="item.width"
+          :height="item.width"
+          :transform="`rotate(${item.rotate})`"
+        >
           <!-- 这里也可以分开写animate x y -->
-          <animateMotion :path="`M ${item.x} ${item.y} L ${item.x -item.motionValue} ${maxY-item.motionValue }`" begin="0s"
-            :dur="`${item.dur}s`" repeatCount="indefinite" />
+          <animateMotion
+            :path="`M ${item.x} ${item.y} L ${item.x - item.motionValue} ${maxY - item.motionValue}`"
+            begin="0s"
+            :dur="`${item.dur}s`"
+            repeatCount="indefinite"
+          />
+          <!-- repeatCount="indefinite" -->
         </image>
       </template>
     </svg>
@@ -27,7 +45,7 @@ export default {
       maxY: document.documentElement.clientHeight,
       allElement: [
         {
-          num: 15,
+          num: 13,
           minWidth: 50,
           maxWidth: 75,
           minHeight: 60,
@@ -35,55 +53,56 @@ export default {
           durBase: 10,
           imageLink: 'img/hongbao.svg',
           imageType: 'click',
-          rotate:25,
-          motionValue:0
+          rotate: 25,
+          motionValue: 0,
         },
         {
-          num: 15,
+          num: 10,
           minWidth: 21,
           maxWidth: 21,
           minHeight: 21,
           maxHeight: 21,
           durBase: 5,
           imageLink: 'img/star.svg',
-          rotate:25,
-          motionValue:0
+          imageType: 'unclick',
+          rotate: 25,
+          motionValue: 0,
         },
         {
-          num: 13,
+          num: 10,
           minWidth: 16,
           maxWidth: 16,
           minHeight: 114,
           maxHeight: 114,
           durBase: 10,
           imageLink: 'img/line.svg',
-          rotate:25,
-          motionValue:0
+          imageType: 'unclick',
+          rotate: 25,
+          motionValue: 0,
         },
       ],
       packetList: [],
     };
   },
 
-  mounted() { },
+  mounted() {},
   methods: {
     async start() {
       this.svgShow = true;
       await this.allElement.forEach((item) => {
-        this.getRandomArr(item)
+        this.getRandomArr(item);
       });
       this.elOpacity = 1;
-      this.stop(10000);
+      // this.stop(10000);
     },
     stop(time) {
       setTimeout(() => {
-        this.elOpacity = 0
+        this.elOpacity = 0;
         setTimeout(() => {
-          this.$emit('stopCallBack', this.totalCount)
-          this.totalCount = 0
-          this.svgShow = false
-          this.packetList = []
-
+          this.$emit('stopCallBack', this.totalCount);
+          this.totalCount = 0;
+          this.svgShow = false;
+          this.packetList = [];
         }, 500);
       }, time);
     },
@@ -99,14 +118,14 @@ export default {
         imageLink,
         imageType,
         rotate,
-        motionValue
+        motionValue,
       } = config;
       for (let i = 0; i < num; i++) {
         const height = Math.random() * (maxHeight - minHeight) + minHeight;
-
+        const width=Math.random() * (maxWidth - minWidth) + minWidth
         this.packetList.push({
-          key: +new Date(),
-          width: Math.random() * (maxWidth - minWidth) + minWidth,
+          key: +new Date()+'_'+imageType,
+          width,
           height,
           x: Math.random() * maxX + 1,
           y: `-${height}`,
@@ -114,23 +133,25 @@ export default {
           imageLink,
           imageType,
           rotate,
-          motionValue
+          motionValue,
         });
       }
     },
-    imgClick(item, e) {
-      if (item.imageType !== 'click') {
-        return
+    svgClick(e){
+      const imageType=e.target.id.split('_')[1]
+      if(e.target.nodeName==='image'&&imageType==='click'){
+        this.totalCount++
+        e.target.remove()
       }
-      this.totalCount++
-      this.$emit('countChange', this.totalCount)
-      e.target.setAttribute('display', 'none');
     }
   },
 };
 </script>
 
 <style lang="scss" scoped>
+*{
+  //outline: 1px #999 solid;
+}
 .red-packet-svg {
   position: fixed;
   top: 0;
@@ -142,7 +163,7 @@ export default {
   opacity: 0;
   transition: opacity 0.5s;
 
-  img {
+  .svg_img {
     transform-box: fill-box;
     transform-origin: center;
     cursor: pointer;
