@@ -47,6 +47,14 @@ module.exports = {
             path: 'colour-ribbon',
             title: '彩带动画',
           },
+          {
+            path: 'scrape-off',
+            title: '刮刮乐抽奖',
+          },
+          {
+            path: 'gashapon-machine',
+            title: '扭蛋机抽奖',
+          },
         ],
       },
       {
