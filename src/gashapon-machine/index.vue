@@ -1,9 +1,14 @@
 <template>
   <div>
     <div class="gashapon_machine">
-      <canvas class="gashapon_machine_canvas" id="gashapon_machine_canvas"></canvas>
+      <canvas class="gashapon_machine_canvas" id="gashapon_machine_canvas"
+        :style="`width:${width * 3};height:${height * 3};`" :width="width * 3" :height="height * 3"></canvas>
+      <div class="gashapon_machine_bottom"></div>
+      <div class="gashapon_machine_result">
+      <img :class="prizeUrl?'img_show':''" :src="prizeUrl" alt=""/>
+      </div>
+      
     </div>
-    <button>开始</button>
   </div>
 </template>
 
@@ -13,23 +18,22 @@ export default {
   props: {
     width: {
       type: Number,
-      default: null,
+      default: 160,
     },
-    // height: {
-    //   type: Number,
-    //   default: 150,
-    // },
-    // contentType: {
-    //   type: String,
-    //   default: 'text',
-    //   validator: (value) => {
-    //     return ['text', 'image'].includes(value);
-    //   },
-    // },
-    // content: {
-    //   type: String,
-    //   default: '测试',
-    // },
+    height: {
+      type: Number,
+      default: 160,
+    },
+    // 小球半径
+    ballRadius: {
+      type: Number,
+      default: 15,
+    },
+    // 小球速度
+    ballSpeed: {
+      type: Number,
+      default: 13,
+    },
   },
   data() {
     return {
@@ -42,14 +46,22 @@ export default {
       awardList: [],// 小球池
       ballTotalCount: 10,// 小球总数量
       timer: null,// 定时器
-      radius: 30,// 半径
+      radius: this.ballRadius * 3,// 半径
+      speed: this.ballSpeed * 3,
+      acceleration: 0.2,// 停止时的负加速度
+      prizeUrl:null,
     };
   },
   computed: {
 
   },
-  mounted() {
-    this.initCanvas();
+  async mounted() {
+    await this.initCanvas();
+    await this.initBall();
+    await this.run()
+    setTimeout(() => {
+      this.stop()
+    }, 2000);
   },
   methods: {
     initCanvas() {
@@ -62,44 +74,133 @@ export default {
       });
     },
     initBall() {
-      for (let i = 0; i < this.ballNum; i++) {// 随机生成小球序列
+      this.awardList = []
+      for (let i = 0; i < this.ballTotalCount; i++) {// 随机生成小球序列
+        let speedX
+        let speedY
+        do {
+          speedX = Math.random() * (this.speed) - 10
+        } while (speedX < 10);// 小球横坐标改变速度
+        do {
+          speedY = Math.random() * (this.speed) - 10
+        } while (speedY < 10);// 小球纵坐标改变速度
         const obj = {
           x: Math.random() * (this.canvas.width - this.radius * 2),
           y: Math.random() * (this.canvas.height - this.radius * 2),
-          img: this.ballList(Math.floor(this.ballTotalCount * Math.random())),
-          speedX: Math.random() * (20) - 10,
-          speedY: Math.random() * (20) - 10,
+          img: this.ballList[i % this.ballList.length].element,
+          speedX,
+          speedY,
+          radius: this.radius
         }
         this.awardList.push(obj)
       }
+
+    },
+    run() {
+      this.initBall()
+      if (this.awardList.length === 0) {// 奖池中没有小球
+        return
+      }
       window.clearInterval(this.timer);// 清除计时器
-      this.timer = setInterval(function () {
+      this.timer = setInterval(() => {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);// 清空画布
-        for (let i = 0; i < this.awardList.length; i++) {
-          this.awardList[i].run();
-        }
+        this.awardList.forEach(item => {
+          this.runBall(item);
+        });
         // 使小球运动
       }, 15);
     },
-    stop() {
+    stop(index) {
+      if (this.awardList.length === 0) {// 奖池中没有小球
+        return
+      }
+      window.clearInterval(this.timer);// 清除计时器
+      // this.awardList.pop()
+      this.timer = setInterval(() => {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);// 清空画布
+        this.awardList.forEach(item => {
+          this.stopBall(item);
+        });
+        // 使小球停止
+      }, 15);
+      this.prizeUrl=index!==undefined||null?this.ballList[index].url:null
 
     },
-    run(item) {
- item.x += item.speedX;
-            item.y += item.speedY;
-            if (item.x > this.canvas.width - item.r * 2) {// 小球碰到右边界，横坐标速度变为负
-                item.speedX = -item.speedX;
-            }
-            if (item.x < 0) {// 小球碰到左边界，横坐标速度变为正
-                item.speedX = Math.abs(item.speedX);
-            }
-            if (item.y > this.canvas.height - item.r * 2) {// 小球碰到下边界，纵坐标速度变为负
-                item.speedY = -item.speedY;
-            }
-            if (item.y < 0) {// 小球碰到上边界，纵坐标速度变为正
-                item.speedY = Math.abs(item.speedY);
-            }
-            this.ctx.drawImage(item.img, item.x, item.y, item.r*2, item.radius);// 绘制小球
+
+    stopBall(item) {
+      item.x += item.speedX;
+      item.y += item.speedY;
+      if (item.x > this.canvas.width - item.radius * 2) {// 小球碰到右边界，横坐标速度变为负
+        item.speedX = -(item.speedX);
+      }
+      if (item.x < 0) {// 小球碰到左边界，横坐标速度变为正
+        item.speedX = Math.abs(item.speedX);
+      }
+      if (item.y > this.canvas.height - item.radius * 2) {// 小球碰到下边界，纵坐标速度变为负
+      // item.speedY = -item.speedY;
+        if (item.speedY !== 0) {
+          item.speedY = Math.floor(item.speedY - this.acceleration);
+        }
+        if (item.speedX !== 0) {
+          item.speedX = Math.floor(item.speedX - this.acceleration);
+        }
+      }
+      if (item.y < 0) {// 小球碰到上边界，纵坐标速度变为正
+        item.speedY = Math.abs(item.speedY);
+      }
+      // if (Math.abs(item.speedX <= 0.2)) {
+      //   item.speedX = 0
+      // }
+      // if (Math.abs(item.speedY <= 0.2)) {
+      //   item.speedY = 0
+      // }
+
+      this.ctx.drawImage(item.img, item.x, item.y, item.radius * 2, item.radius * 2);// 绘制小球
+    },
+    runBall(item) {
+      // const canvasRadius = this.canvas.width / 2 - item.radius
+      item.x += item.speedX;
+      item.y += item.speedY;
+      // if (Math.abs(canvasRadius - item.x) * Math.abs(canvasRadius - item.y) >= canvasRadius * canvasRadius) {
+      //   // 根据圆形边界直角反弹原理 用向量计算转向速度
+      //   const Sx = item.speedX
+      //   const Sy = item.speedY
+      //   // item.speedX = -item.speedX;
+      //   // item.speedY = -item.speedY;
+      //   const value = Math.sqrt(Sx * Sx + Sy * Sy)
+      //   const cos1 = Sx / value
+      //   const sin1 = Sy / value
+      //   const cos2 = Math.cos(Math.PI / 2);
+      //   const sin2 = Math.sin(Math.PI / 2);
+
+      //   const cos3 = cos1 * cos2 - sin1 * sin2;
+      //   const sin3 = sin1 * cos2 + cos1 * sin2;
+      //   item.speedX = (value * cos3).toFixed(2);
+      //   item.speedY = (value * sin3).toFixed(2);
+      //   console.log(Sx, Sy, item.speedX, item.speedY)
+      // }
+      if (item.x > this.canvas.width - item.radius * 2) {// 小球碰到右边界，横坐标速度变为负
+        item.speedX = -item.speedX;
+      }
+      if (item.x < 0) {// 小球碰到左边界，横坐标速度变为正
+        item.speedX = Math.abs(item.speedX);
+      }
+      if (item.y > this.canvas.height - item.radius * 2) {// 小球碰到下边界，纵坐标速度变为负
+        item.speedY = -item.speedY;
+      }
+      if (item.y < 0) {// 小球碰到上边界，纵坐标速度变为正
+        item.speedY = Math.abs(item.speedY);
+      }
+      this.ctx.drawImage(item.img, item.x, item.y, item.radius * 2, item.radius * 2);// 绘制小球
+    },
+    // 计算距离圆心的距离
+    getCenterLength(x, y) {
+      // 半径 圆心
+      const canvasRadius = this.canvas.width
+      const canvasCenter = [canvasRadius, canvasRadius]
+      const length = Math.abs(canvasCenter[0] - x) * Math.abs(canvasCenter[1] - y)
+
+      return length < canvasRadius
     }
 
   },
@@ -118,12 +219,39 @@ export default {
   user-select: none;
 
   &_canvas {
-    width: 160px;
-    height: 160px;
+
     border-radius: 50%;
     position: absolute;
     top: 4px;
     left: 37px;
+    transform-origin: left top;
+    transform: scale(0.333333);
+  }
+
+  &_bottom {
+    background: url(http://39.107.231.241:84/ndj/yh_bottom.png) center center no-repeat;
+    background-size: 100%;
+    width: 144px;
+    height: 57px;
+    position: absolute;
+    bottom: 142px;
+    left: 45px;
+    z-index: 10;
+  }
+  &_result{
+    position: absolute;
+    bottom: 36px;
+    left: 106px;
+    img{
+    width: 31px;
+    height: 31px;
+    opacity: 0;
+    transition: opacity 0.3s 1s;
+
+    }
+    .img_show{
+      opacity: 1;
+    }
   }
 }
 </style>
