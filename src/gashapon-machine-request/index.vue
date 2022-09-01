@@ -5,7 +5,7 @@
         :style="`width:${width * 3};height:${height * 3};`" :width="width * 3" :height="height * 3"></canvas>
       <div class="gashapon_machine_bottom"></div>
       <div class="gashapon_machine_result">
-        <img :class="prizeUrl ? 'img_show' : ''" :src="prizeUrl" alt="" />
+        <img  :class="prizeUrl?'img_show':''" :src="prizeUrl?prizeUrl:'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'" alt="" />
       </div>
 
     </div>
@@ -59,10 +59,10 @@ export default {
   async mounted() {
     await this.initCanvas();
     await this.initBall();
-    // await this.run()
-    // setTimeout(() => {
-    //   this.stop()
-    // }, 2000);
+    await this.run()
+    setTimeout(() => {
+      this.stop()
+    }, 2000);
   },
   methods: {
     initCanvas() {
@@ -76,6 +76,7 @@ export default {
     },
     initBall() {
       this.awardList = []
+      this.prizeUrl=null
       for (let i = 0; i < this.ballTotalCount; i++) {// 随机生成小球序列
         let speedX
         let speedY
@@ -99,9 +100,6 @@ export default {
     },
     run() {
       this.initBall()
-      if (this.awardList.length === 0) {// 奖池中没有小球
-        return
-      }
       window.cancelAnimationFrame(this.timer);// 清除计时器
       this.timer = window.requestAnimationFrame(this.runBall)
     },
@@ -147,7 +145,7 @@ export default {
 
         this.ctx.drawImage(item.img, item.x, item.y, item.radius * 2, item.radius * 2);// 绘制小球
       });
-      requestAnimationFrame(this.stopBall)
+      this.timer= requestAnimationFrame(this.stopBall)
     },
     runBall() {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);// 清空画布
@@ -187,19 +185,9 @@ export default {
         }
         this.ctx.drawImage(item.img, item.x, item.y, item.radius * 2, item.radius * 2);// 绘制小球
       })
-      requestAnimationFrame(this.runBall)
+      this.timer= requestAnimationFrame(this.runBall)
 
     },
-    // 计算距离圆心的距离
-    getCenterLength(x, y) {
-      // 半径 圆心
-      const canvasRadius = this.canvas.width
-      const canvasCenter = [canvasRadius, canvasRadius]
-      const length = Math.abs(canvasCenter[0] - x) * Math.abs(canvasCenter[1] - y)
-
-      return length < canvasRadius
-    }
-
   },
 };
 </script>
@@ -246,7 +234,6 @@ export default {
       height: 31px;
       opacity: 0;
       transition: opacity 0.3s 1s;
-
     }
 
     .img_show {

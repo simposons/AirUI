@@ -5,7 +5,7 @@
         :style="`width:${width * 3};height:${height * 3};`" :width="width * 3" :height="height * 3"></canvas>
       <div class="gashapon_machine_bottom"></div>
       <div class="gashapon_machine_result">
-      <img :class="prizeUrl?'img_show':''" :src="prizeUrl" alt=""/>
+      <img :class="prizeUrl?'img_show':''" :src="prizeUrl?prizeUrl:'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'" alt="" />
       </div>
       
     </div>
@@ -75,6 +75,7 @@ export default {
     },
     initBall() {
       this.awardList = []
+      this.prizeUrl=null
       for (let i = 0; i < this.ballTotalCount; i++) {// 随机生成小球序列
         let speedX
         let speedY
@@ -193,16 +194,6 @@ export default {
       }
       this.ctx.drawImage(item.img, item.x, item.y, item.radius * 2, item.radius * 2);// 绘制小球
     },
-    // 计算距离圆心的距离
-    getCenterLength(x, y) {
-      // 半径 圆心
-      const canvasRadius = this.canvas.width
-      const canvasCenter = [canvasRadius, canvasRadius]
-      const length = Math.abs(canvasCenter[0] - x) * Math.abs(canvasCenter[1] - y)
-
-      return length < canvasRadius
-    }
-
   },
 };
 </script>

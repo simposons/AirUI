@@ -1,6 +1,6 @@
 <template>
 <div>
-    <qrcode class="qrcode" :text="url" version="4"></qrcode>
+    <qrcode class="qrcode" :text="url" version="8"></qrcode>
     <div class="url">{{url}}</div>
 </div>
 </template>
