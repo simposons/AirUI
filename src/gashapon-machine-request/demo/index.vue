@@ -1,7 +1,7 @@
 <template>
   <demo-section>
     <demo-block title="基础用法">
-      <gashapon-machine ref="gashaponMachine"/>
+      <gashapon-machine-request ref="gashaponMachine"/>
 
       <div style="text-align: center;">
       <button @click="start">开始</button>

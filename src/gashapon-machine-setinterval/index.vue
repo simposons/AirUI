@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  name: 'gashapon-machine',
+  name: 'gashapon-machine-setinterval',
   props: {
     width: {
       type: Number,

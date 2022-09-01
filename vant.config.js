@@ -52,8 +52,12 @@ module.exports = {
             title: '刮刮乐抽奖',
           },
           {
-            path: 'gashapon-machine',
-            title: '扭蛋机抽奖',
+            path: 'gashapon-machine-setinterval',
+            title: '扭蛋机抽奖-setInterval',
+          },
+          {
+            path: 'gashapon-machine-request',
+            title: '扭蛋机抽奖-requestAnimationFrame',
           },
         ],
       },
