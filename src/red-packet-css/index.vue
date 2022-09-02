@@ -3,40 +3,39 @@
     <svg
       v-show="svgShow"
       class="red-packet-svg"
-      
+      :style="`opacity:${elOpacity}`"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
       @click="svgClick"
     >
-    <!-- :style="`opacity:${elOpacity}`" -->
-      <image
-        v-for="(item, index) in packetList"
-        class="svg_img"
-        :style="`z-index:${item.imageType === 'click' ? '10' : '0'};`"
-        :key="index"
-        :href="item.imageLink"
-        :id="item.key"
-        :width="item.width"
-        :height="item.height"
-        :transform="`rotate(${item.rotate})`"
-      >
-        <!-- 这里也可以分开写animate x y -->
-        <animateMotion
-          :path="`M ${item.x} ${item.y} L ${item.x - item.motionValue} 
-          ${maxY - item.motionValue}`"
-          begin="0s"
-          :dur="`${item.dur}s`"
-          repeatCount="indefinite"
-        />
-        <!-- repeatCount="indefinite" -->
-      </image>
+      <template v-for="(item, index) in packetList">
+        <image
+          class="svg_img"
+          :style="`z-index${item.imageType==='click' ? '10' : '0'};`"
+          :key="index"
+          :href="item.imageLink"
+          :id="item.key"
+          :width="item.width"
+          :height="item.width"
+          :transform="`rotate(${item.rotate})`"
+        >
+          <!-- 这里也可以分开写animate x y -->
+          <animateMotion
+            :path="`M ${item.x} ${item.y} L ${item.x - item.motionValue} ${maxY - item.motionValue}`"
+            begin="0s"
+            :dur="`${item.dur}s`"
+            repeatCount="indefinite"
+          />
+          <!-- repeatCount="indefinite" -->
+        </image>
+      </template>
     </svg>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'red-packet-svg',
+  name: 'red-packet-css',
   props: {},
   data() {
     return {
@@ -89,14 +88,11 @@ export default {
   mounted() {},
   methods: {
     async start() {
-      this.packetList = [];
       this.svgShow = true;
-      this.elOpacity = 1;
-      setTimeout(() => {
-       this.allElement.forEach((item) => {
+      await this.allElement.forEach((item) => {
         this.getRandomArr(item);
       });
-    },500)
+      this.elOpacity = 1;
       // this.stop(10000);
     },
     stop(time) {
@@ -126,15 +122,14 @@ export default {
       } = config;
       for (let i = 0; i < num; i++) {
         const height = Math.random() * (maxHeight - minHeight) + minHeight;
-        const width = Math.random() * (maxWidth - minWidth) + minWidth;
-        console.log(height)
+        const width=Math.random() * (maxWidth - minWidth) + minWidth
         this.packetList.push({
-          key: +new Date() + '_' + imageType,
+          key: +new Date()+'_'+imageType,
           width,
           height,
-          x: Math.random() * (maxX-width) + 1,
+          x: Math.random() * maxX + 1,
           y: `-${height}`,
-          dur: Math.random() * durBase,
+          dur: Math.random() * durBase + 1,
           imageLink,
           imageType,
           rotate,
@@ -142,24 +137,21 @@ export default {
         });
       }
     },
-    svgClick(e) {
-      const imageType = e.target.id.split('_')[1];
-      if (e.target.nodeName === 'image' && imageType === 'click') {
-        this.$el.pauseAnimations()
-        this.totalCount++;
-        this.$emit('countChange', this.totalCount);
-        e.target.remove();
+    svgClick(e){
+      const imageType=e.target.id.split('_')[1]
+      if(e.target.nodeName==='image'&&imageType==='click'){
+        this.totalCount++
+        e.target.remove()
       }
-    },
+    }
   },
 };
 </script>
 
 <style lang="scss" scoped>
-* {
+*{
   //outline: 1px #999 solid;
 }
-
 .red-packet-svg {
   position: fixed;
   top: 0;
@@ -168,8 +160,7 @@ export default {
   height: 100vh;
   width: 100vw;
   background: rgba(0, 0, 0, 0.5);
-  overflow-y: auto;
-  opacity: 1;
+  opacity: 0;
   transition: opacity 0.5s;
 
   .svg_img {

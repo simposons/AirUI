@@ -5,7 +5,7 @@
         <button @click="buttonClick" >开始</button>
         <div>红包数{{count}}</div>
       </div>
-      <red-packet-svg ref="redPacketSvg" @stopCallBack="stopCallBack" @countChange="countChange"/>
+      <red-packet-css ref="redPacketSvg" @stopCallBack="stopCallBack" @countChange="countChange"/>
     </demo-block>
   </demo-section>
 </template>
@@ -22,9 +22,6 @@ export default {
   methods: {
     buttonClick() {
       this.$refs.redPacketSvg.start()
-      setTimeout(() => {
-        this.$refs.redPacketSvg.stop()
-      }, 5000);
     },
     stopCallBack(e){
       console.log('总数：',e)

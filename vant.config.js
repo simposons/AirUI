@@ -44,6 +44,10 @@ module.exports = {
             title: '红包雨抽奖-svg',
           },
           {
+            path: 'red-packet-css',
+            title: '红包雨抽奖-css',
+          },
+          {
             path: 'colour-ribbon',
             title: '彩带动画',
           },
