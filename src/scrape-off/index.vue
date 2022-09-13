@@ -29,7 +29,7 @@ export default {
     },
     content: {
       type: String,
-      default: '测试',
+      required:true,
     },
   },
   data() {

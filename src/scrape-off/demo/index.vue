@@ -1,9 +1,7 @@
 <template>
   <demo-section>
     <demo-block title="基础用法">
-      <div style="text-align: center;">
-      </div>
-      <scrape-off/>
+      <scrape-off content="恭喜您中奖了"/>
     </demo-block>
   </demo-section>
 </template>

@@ -63,6 +63,10 @@ module.exports = {
             path: 'gashapon-machine-request',
             title: '扭蛋机抽奖-requestAnimationFrame',
           },
+          {
+            path: 'shake-tree',
+            title: '摇一摇',
+          },
         ],
       },
       {
