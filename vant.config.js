@@ -67,6 +67,10 @@ module.exports = {
             path: 'shake-tree',
             title: '摇一摇',
           },
+          {
+            path: 'frame-by-frame',
+            title: '逐帧动画',
+          },
         ],
       },
       {

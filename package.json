@@ -59,6 +59,7 @@
   "dependencies": {
     "@lucky-canvas/vue": "^0.1.11",
     "lucky-canvas": "^1.7.27",
+    "proton-engine": "^5.4.5",
     "qrcode": "^1.5.1",
     "vconsole": "^3.14.6"
   }
