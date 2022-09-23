@@ -72,7 +72,7 @@ module.exports = {
             title: '逐帧动画',
           },
           {
-            path: 'proton-engine',
+            path: 'proton-engine-example',
             title: '粒子引擎示例',
           },
         ],
