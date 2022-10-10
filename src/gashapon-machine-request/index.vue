@@ -34,15 +34,19 @@ export default {
       type: Number,
       default: 13,
     },
+      // 小球种类合集
+    ballList:{
+      type:Array,
+      default:()=>{
+        [{ url: 'http://39.107.231.241:84/ndj/yh_ball_red.png' },
+        { url: 'http://39.107.231.241:84/ndj/yh_ball_grey.png' }]
+      }
+    }
   },
   data() {
     return {
       canvas: null,
       ctx: null,
-      ballList: [
-        { url: 'http://39.107.231.241:84/ndj/yh_ball_red.png' },
-        { url: 'http://39.107.231.241:84/ndj/yh_ball_grey.png' }
-      ],// 小球种类合集
       awardList: [],// 小球池
       ballTotalCount: 10,// 小球总数量
       timer: null,// 定时器

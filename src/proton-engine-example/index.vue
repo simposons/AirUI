@@ -1,12 +1,13 @@
 <template>
-  <div>
+  <div class="proton-engine-example">
     <canvas id="mycanvas"></canvas>
   </div>
 </template>
 
 <script>
 import Proton from 'proton-engine/src/index.js'
-
+import Stats from "stats.js";
+import RAFManager from "raf-manager";
 // const Proton =require('proton-engine/src/index.js')
 
 export default {
@@ -21,69 +22,90 @@ export default {
       proton: null,
       emitter: null,
       renderer: null,
+      stats: null,
+
     }
   },
   watch: {
 
   },
-  mounted() {
-    this.initCanvas()
+  async mounted() {
+    await this.initCanvas()
+    await this.initStats()
+    await this.createProton()
+    await this.render()
   },
   methods: {
     initCanvas() {
       const { emitter } = this
-      let {canvas} =this
-      canvas = document.getElementById('mycanvas');
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      this.context = canvas.getContext("2d");
+      this.canvas = document.getElementById('mycanvas');
+      this.canvas.width = window.innerWidth;
+      this.canvas.height = window.innerWidth;
+      this.context = this.canvas.getContext("2d");
       window.onresize = function () {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        emitter.p.x = canvas.width / 2;
-        emitter.p.y = canvas.height / 2;
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerWidth;
+        emitter.p.x = this.canvas.width / 2;
+        emitter.p.y = this.canvas.height / 2;
       };
     },
+    initStats() {
+      
+     this.stats = new Stats();
+     this.stats.setMode(2);
+     this.stats.domElement.style.position = "absolute";
+     this.stats.domElement.style.left = "0px";
+     this.stats.domElement.style.top = "0px";
+      this.$el.appendChild(this.stats.domElement);
+    },
     createProton() {
-      let { proton, emitter, renderer } = this
-      const {canvas,context} =this
-      proton = new Proton();
-      emitter = new Proton.Emitter();
-      emitter.rate = new Proton.Rate(
+      const { canvas, context } = this
+      this.proton = new Proton();
+      this.emitter = new Proton.Emitter();
+      this.emitter.rate = new Proton.Rate(
         new Proton.Span(10, 20),
         new Proton.Span(0.1, 0.25)
       );
-      emitter.addInitialize(new Proton.Mass(1));
-      emitter.addInitialize(new Proton.Radius(1, 12));
-      emitter.addInitialize(new Proton.Life(2, 4));
-      emitter.addInitialize(
+      this.emitter.addInitialize(new Proton.Mass(1));
+      this.emitter.addInitialize(new Proton.Radius(1, 12));
+      this.emitter.addInitialize(new Proton.Life(2, 4));
+      this.emitter.addInitialize(
         new Proton.Velocity(
           new Proton.Span(2, 4),
           new Proton.Span(-30, 30),
           "polar"
         )
       );
-      emitter.addBehaviour(new Proton.RandomDrift(30, 30, 0.05));
-      emitter.addBehaviour(
+      this.emitter.addBehaviour(new Proton.RandomDrift(30, 30, 0.05));
+      this.emitter.addBehaviour(
         new Proton.Color("ff0000", "random", Infinity, Proton.easeOutQuart)
       );
-      emitter.addBehaviour(new Proton.Scale(1, 0.7));
-      emitter.p.x = canvas.width / 2;
-      emitter.p.y = canvas.height / 2;
-      emitter.emit();
-
-      proton.addEmitter(emitter);
-      renderer = new Proton.CanvasRenderer(canvas);
-      renderer.onProtonUpdate = () => {
+      this.emitter.addBehaviour(new Proton.Scale(1, 0.7));
+      this.emitter.p.x = canvas.width / 2;
+      this.emitter.p.y = canvas.height / 2;
+      this.emitter.emit();
+      this.proton.addEmitter(this.emitter);
+      this.renderer = new Proton.CanvasRenderer(canvas);
+      this.renderer.onProtonUpdate = () => {
         context.fillStyle = "rgba(0, 0, 0, 0.1)";
         context.fillRect(0, 0, canvas.width, canvas.height);
       };
-      proton.addRenderer(renderer);
+      this.proton.addRenderer(this.renderer);
+    },
+    render() {
+      RAFManager.add(() => {
+        this.stats.begin();
+        this.emitter.rotation += 1.5;
+        this.proton.update();
+        this.stats.end();
+      });
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-canvas {}
+.proton-engine-example {
+  position: relative;
+}
 </style>

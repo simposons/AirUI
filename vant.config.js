@@ -100,6 +100,10 @@ module.exports = {
             path: 'lucky-slot-machines',
             title: '老虎机抽奖',
           },
+          {
+            path: 'wangeditor-example',
+            title: 'wangeditor',
+          }
         ],
       },
       {
@@ -148,8 +152,6 @@ module.exports = {
     // simulator:{
     //   url:'index.html/'
     // },
-    // 是否在 dev 时开启 vConsole 调试，用于移动端 debug。
-    enableVConsole:true,
 
   },
 };
