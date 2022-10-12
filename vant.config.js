@@ -100,10 +100,10 @@ module.exports = {
             path: 'lucky-slot-machines',
             title: '老虎机抽奖',
           },
-          {
-            path: 'wangeditor-example',
-            title: 'wangeditor',
-          }
+          // {
+          //   path: 'wangeditor-example',
+          //   title: 'wangeditor',
+          // }
         ],
       },
       {
