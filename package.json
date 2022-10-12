@@ -58,8 +58,6 @@
   ],
   "dependencies": {
     "@lucky-canvas/vue": "^0.1.11",
-    // "@wangeditor/editor": "^5.1.20",
-    // "@wangeditor/editor-for-vue": "^1.0.2",
     "lucky-canvas": "^1.7.27",
     "proton-engine": "^5.4.5",
     "qrcode": "^1.5.1",
