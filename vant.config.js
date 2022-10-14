@@ -75,6 +75,10 @@ module.exports = {
             path: 'proton-engine-example',
             title: '粒子引擎示例',
           },
+          {
+            path: 'matterjs-example',
+            title: '物理引擎示例',
+          },
         ],
       },
       {
@@ -100,10 +104,7 @@ module.exports = {
             path: 'lucky-slot-machines',
             title: '老虎机抽奖',
           },
-          // {
-          //   path: 'wangeditor-example',
-          //   title: 'wangeditor',
-          // }
+
         ],
       },
       {

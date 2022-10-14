@@ -1,11 +1,13 @@
 <template>
   <div>
-    <div class="gashapon_machine">
+    <div class="gashapon_machine" ref="gashaponMachine">
       <canvas class="gashapon_machine_canvas" id="gashapon_machine_canvas"
         :style="`width:${width * 3};height:${height * 3};`" :width="width * 3" :height="height * 3"></canvas>
       <div class="gashapon_machine_bottom"></div>
       <div class="gashapon_machine_result">
-        <img  :class="prizeUrl?'img_show':''" :src="prizeUrl?prizeUrl:'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'" alt="" />
+        <img :class="prizeUrl?'img_show':''"
+          :src="prizeUrl?prizeUrl:'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"
+          alt="" />
       </div>
 
     </div>
@@ -13,6 +15,8 @@
 </template>
 
 <script>
+import Stats from "stats.js";
+
 export default {
   name: 'gashapon-machine-request',
   props: {
@@ -34,13 +38,23 @@ export default {
       type: Number,
       default: 13,
     },
-      // 小球种类合集
-    ballList:{
-      type:Array,
-      default:()=>{
-        [{ url: 'http://39.107.231.241:84/ndj/yh_ball_red.png' },
-        { url: 'http://39.107.231.241:84/ndj/yh_ball_grey.png' }]
-      }
+    // 小球种类合集
+    ballList: {
+      type: Array,
+      default: () => [
+        { url: 'http://39.107.231.241:84/ndj/yh_ball_red.png' },
+        { url: 'http://39.107.231.241:84/ndj/yh_ball_grey.png' }
+      ]
+    },
+    // 小球总数量
+    ballTotalCount: {
+      type: Number,
+      default: 10,
+    },
+    // 是否开启帧数检测stats
+    ifStats: {
+      type: Boolean,
+      default: true,
     }
   },
   data() {
@@ -48,13 +62,12 @@ export default {
       canvas: null,
       ctx: null,
       awardList: [],// 小球池
-      ballTotalCount: 10,// 小球总数量
       timer: null,// 定时器
       radius: this.ballRadius * 3,// 半径
       speed: this.ballSpeed * 3,
       acceleration: 0.2,// 停止时的负加速度
       prizeUrl: null,
-      i: 0,
+      stats: null,
     };
   },
   computed: {
@@ -63,6 +76,7 @@ export default {
   async mounted() {
     await this.initCanvas();
     await this.initBall();
+    await this.initStats();
     await this.run()
     setTimeout(() => {
       this.stop()
@@ -80,7 +94,7 @@ export default {
     },
     initBall() {
       this.awardList = []
-      this.prizeUrl=null
+      this.prizeUrl = null
       for (let i = 0; i < this.ballTotalCount; i++) {// 随机生成小球序列
         let speedX
         let speedY
@@ -118,6 +132,7 @@ export default {
 
     },
     stopBall() {
+      this.stats.begin();
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);// 清空画布
       this.awardList.forEach(item => {
         item.x += item.speedX;
@@ -149,9 +164,11 @@ export default {
 
         this.ctx.drawImage(item.img, item.x, item.y, item.radius * 2, item.radius * 2);// 绘制小球
       });
-      this.timer= requestAnimationFrame(this.stopBall)
+      this.stats.end();
+      this.timer = requestAnimationFrame(this.stopBall)
     },
     runBall() {
+      this.stats.begin();
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);// 清空画布
       this.awardList.forEach(item => {
         // const canvasRadius = this.canvas.width / 2 - item.radius
@@ -189,8 +206,18 @@ export default {
         }
         this.ctx.drawImage(item.img, item.x, item.y, item.radius * 2, item.radius * 2);// 绘制小球
       })
-      this.timer= requestAnimationFrame(this.runBall)
+      this.stats.end();
+      this.timer = requestAnimationFrame(this.runBall)
 
+    },
+    initStats() {
+      if (!this.ifStats) return
+      this.stats = new Stats();
+      this.stats.setMode(2);
+      this.stats.domElement.style.position = "absolute";
+      this.stats.domElement.style.left = "0px";
+      this.stats.domElement.style.top = "0px";
+      this.$refs.gashaponMachine.appendChild(this.stats.domElement);
     },
   },
 };
