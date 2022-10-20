@@ -171,27 +171,27 @@ export default {
       this.stats.begin();
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);// 清空画布
       this.awardList.forEach(item => {
-        // const canvasRadius = this.canvas.width / 2 - item.radius
         item.x += item.speedX;
         item.y += item.speedY;
+        // const canvasRadius = this.canvas.width / 2-this.ballRadius
         // if (Math.abs(canvasRadius - item.x) * Math.abs(canvasRadius - item.y) >= canvasRadius * canvasRadius) {
         //   // 根据圆形边界直角反弹原理 用向量计算转向速度
         //   const Sx = item.speedX
         //   const Sy = item.speedY
-        //   // item.speedX = -item.speedX;
-        //   // item.speedY = -item.speedY;
         //   const value = Math.sqrt(Sx * Sx + Sy * Sy)
         //   const cos1 = Sx / value
         //   const sin1 = Sy / value
-        //   const cos2 = Math.cos(Math.PI / 2);
-        //   const sin2 = Math.sin(Math.PI / 2);
+        //   const cos2 = Math.cos(Sy / this.ballRadius);
+        //   const sin2 = Math.sin(Sx / this.ballRadius);
 
         //   const cos3 = cos1 * cos2 - sin1 * sin2;
         //   const sin3 = sin1 * cos2 + cos1 * sin2;
         //   item.speedX = (value * cos3).toFixed(2);
         //   item.speedY = (value * sin3).toFixed(2);
-        //   console.log(Sx, Sy, item.speedX, item.speedY)
         // }
+        
+
+        // 方形碰撞检测 公式 
         if (item.x > this.canvas.width - item.radius * 2) {// 小球碰到右边界，横坐标速度变为负
           item.speedX = -item.speedX;
         }

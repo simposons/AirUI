@@ -156,29 +156,23 @@ export default {
       item.y += item.speedY;
       console.log(item.speedX, item.speedY)
       if (item.x > this.canvas.width - item.radius * 2) {// 小球碰到右边界，横坐标速度变为负
-        item.speedX = -(item.speedX);
-        item.speedX = Math.floor(item.speedX + this.acceleration);
-        if (Math.abs(item.speedX) <= 3) {
-          item.speedX = 0
+          item.speedX = -(item.speedX);
         }
-      }
-      if (item.x < 0) {// 小球碰到左边界，横坐标速度变为正
-        item.speedX = Math.abs(item.speedX);
-        item.speedX = Math.floor(item.speedX - this.acceleration);
-        if (Math.abs(item.speedX) <= 3) {
-          item.speedX = 0
+        if (item.x < 0) {// 小球碰到左边界，横坐标速度变为正
+          item.speedX = Math.abs(item.speedX);
         }
-      }
-      if (item.y > this.canvas.height - item.radius * 2) {// 小球碰到下边界，纵坐标速度变为负
-        item.speedY = -item.speedY;
-        item.speedY = Math.floor(item.speedY + this.acceleration);
-        if (Math.abs(item.speedY) <= 3) {
-          item.speedY = 0
+        if (item.y > this.canvas.height - item.radius * 2) {// 小球碰到下边界，纵坐标速度变为负
+          // item.speedY = -item.speedY;
+          if (item.speedY !== 0) {
+            item.speedY = Math.floor(item.speedY - this.acceleration);
+          }
+          if (item.speedX !== 0) {
+            item.speedX = Math.floor(item.speedX - this.acceleration);
+          }
         }
-      }
-      if (item.y < 0) {// 小球碰到上边界，纵坐标速度变为正
-        item.speedY = Math.abs(item.speedY);
-      }
+        if (item.y < 0) {// 小球碰到上边界，纵坐标速度变为正
+          item.speedY = Math.abs(item.speedY);
+        }
       this.ctx.drawImage(item.img, item.x, item.y, item.radius * 2, item.radius * 2);// 绘制小球
     },
     runBall(item) {

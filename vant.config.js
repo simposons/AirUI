@@ -64,6 +64,10 @@ module.exports = {
             title: '扭蛋机抽奖-requestAnimationFrame',
           },
           {
+            path: 'gashapon-machine-matter',
+            title: '扭蛋机抽奖-matterjs',
+          },
+          {
             path: 'shake-tree',
             title: '摇一摇',
           },

@@ -1,5 +1,16 @@
 <template>
-  <div class="matterDiv" ref="matterDiv"></div>
+  <div>
+    <div class="gashapon_machine" ref="gashaponMachine">
+      <div class="gashapon_machine_canvas" ref="matterDiv" :style="`width:${width};height:${height};`"></div>
+      <div class="gashapon_machine_bottom"></div>
+      <div class="gashapon_machine_result">
+        <img :class="prizeUrl?'img_show':''"
+          :src="prizeUrl?prizeUrl:'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'"
+          alt="" />
+      </div>
+
+    </div>
+  </div>
 </template>
 
 <script>
@@ -17,33 +28,64 @@ const { MouseConstraint } = Matter;
 // Mouse 模块包含用于创建和操作鼠标输入的方法
 const { Mouse } = Matter;
 
-// const { Body } = Matter;
+const { Body } = Matter;
 const { Common } = Matter;
 // const { Composites } = Matter;
 
 let engine = null;
 let render = null;
 let runner = null;
-
 export default {
-  name: 'matterjs-example',
+  name: 'gashapon-machine-matter',
   props: {
+    width: {
+      type: Number,
+      default: 160,
+    },
+    height: {
+      type: Number,
+      default: 160,
+    },
+    // 小球半径
+    ballRadius: {
+      type: Number,
+      default: 12,
+    },
+    // 小球种类合集
+    ballList: {
+      type: Array,
+      default: () => [
+        { url: 'http://39.107.231.241:84/ndj/yh_ball_red.png' },
+        { url: 'http://39.107.231.241:84/ndj/yh_ball_grey.png' }
+      ]
+    },
+    // 小球总数量
+    ballTotalCount: {
+      type: Number,
+      default: 12,
+      // 4的倍数
+    },
+    // 是否开启帧数检测stats
+    ifStats: {
+      type: Boolean,
+      default: false,
+    },
+    ifPerformance: {
+      type: Boolean,
+      default: false,
+    },
 
   },
   data() {
     return {
-      BoxList: [],
-      borders: [],
-      width: window.innerWidth,
-      height: window.innerWidth,
-    }
+      prizeUrl: null,
+    };
+  },
+  computed: {
+
   },
   async mounted() {
-    await this.initEngineAndRender();
-    // await this.initBorders();
-    await this.initCircle();
-    await this.initBall();
-    await this.initWorld();
+    await this.init();
     await this.initMouse();
     window.addEventListener('deviceorientation', this.GetGravity)
   },
@@ -51,7 +93,7 @@ export default {
     window.removeEventListener('deviceorientation', this.GetGravity)
   },
   methods: {
-    initEngineAndRender() {
+    init() {
       engine = Engine.create({
         positionIterations: 10,
         velocityIterations: 10
@@ -73,61 +115,11 @@ export default {
           showAngleIndicator: false,// 物体半径
           showMousePosition: false, // 鼠标约束线
           showVelocity: false, // 移动刚体时速度
-          showStats: true,
-          showPerformance: true
+          showStats: this.ifStats,
+          showPerformance: this.ifPerformance
         }
       });
-    },
-    initBorders() {
-      // // 创建圆形
-      // this.BoxList[0] = Bodies.circle(100, 100, 20, {
-      //   density: .68, // 设置密度
-      //   restitution: 0.8, // 设置物体的弹跳力
-      //   render: {
-      //     sprite: {
-      //       // 设置贴图
-      //       // texture: '月饼.png'
-      //     }
-      //   }
-      // })
-      // // 创建矩形
-      // this.BoxList[1] = Bodies.rectangle(100, 150, 50, 50, {
-      //   density: 1,
-      //   restitution: 0.5,
-      //   render: {
-      //     sprite: {
-      //     }
-      //   }
-      // })
-      // 边界
-      const opts = {
-        isStatic: true,
-        render: {
-          opacity: 1
-        }
-      }
-      this.borders = [
-        Bodies.rectangle(this.width / 2, 0, this.width + 2, 50, opts),
-        Bodies.rectangle(this.width + 4, this.height / 2, 50, this.height + 2, opts),
-        Bodies.rectangle(this.width / 2, this.height + 4, this.width + 2, 50, opts),
-        Bodies.rectangle(-4, this.height / 2, 50, this.height + 2, opts)
-      ]
 
-      // this.bg = Bodies.rectangle(this.Ew / 2, this.Eh - bgy, bgw, bgh, { 
-      //   isStatic: true,
-      //   render: {
-      //     fillStyle:'none',
-      //     sprite: sprite
-      //   },
-      //   isStatic: true,
-      //   isSensor: true,
-      // })
-    },
-    // 角度转弧度
-    convertToRandians(degree) {
-      return degree * (Math.PI / 180);
-    },
-    initCircle() {
       const center = { x: this.width / 2, y: this.height / 2 }
       // 圆的参数方程：以点O（a，b）为圆心，以r为半径的圆的参数方程是 x=a+r*cosθ, y=b+r*sinθ, （其中θ为参数）
       const R = (this.width) / 2 + 50
@@ -135,17 +127,7 @@ export default {
         const randian = this.convertToRandians(angle)
         const x = center.x + R * Math.cos(randian)
         const y = center.y + R * Math.sin(randian)
-        // FYD 1 以正方形围成圆圈,
-        // let body = Bodies.rectangle(x,y,10,10,{
-        // 	isStatic: true,
-        // 	angle: randian,
-        // 	render: {
-        // 			fillStyle: "#000",
-        // 			strokeStyle: "#fff",
-        // 			lineWidth: 1
-        // 		}
-        // })
-        // FYD2 以圆形围成圆圈
+        // 以圆形围成圆圈
         const body = Bodies.circle(x, y, 50, {
           isStatic: true,
           render: {
@@ -156,38 +138,40 @@ export default {
         })
         World.add(engine.world, body);
       }
-    },
-    // 初始化小球
-    initBall() {
+
       const ballopts = (size, texture) => ({
-        density: 0.6, // 密度
-        restitution: 0.6, // 弹性
+        density: 1, // 密度
+        restitution: 1, // 弹性
         render: {
           fillStyle: '',
           sprite: {
             texture,
-            // xScale: (size / 20).toFixed(2),
-            // yScale: (size / 20).toFixed(2)
+            xScale: (size / 20).toFixed(2),
+            yScale: (size / 20).toFixed(2)
           },
         },
         friction: 1,
       })
-      this.BoxList = Composites.stack(50, 50, 4, 3, 0, 0, function (x, y) {
+      const BoxList = Composites.stack(50, 50, 4, this.ballTotalCount / 4, 0, 0, (x, y) => {
         switch (Math.round(Common.random(0, 1))) {
           case 0:
-            return Bodies.circle(x, y, 20, ballopts(20, 'http://39.107.231.241:84/ndj/yh_ball_red.png'));
+            return Bodies.circle(x, y, this.ballRadius, ballopts(this.ballRadius, this.ballList[0].url));
           case 1:
-            return Bodies.circle(x, y, 20, ballopts(20, 'http://39.107.231.241:84/ndj/yh_ball_grey.png'));
+            return Bodies.circle(x, y, this.ballRadius, ballopts(this.ballRadius, this.ballList[1].url));
         }
       });
-    },
-    initWorld() {
-      World.add(engine.world, [...this.BoxList, ...this.borders]);// 将所有物体添加到世界中
+      World.add(engine.world, [...BoxList]);
+      // 重力设置
+      engine.gravity.y = 0.5;
       runner = Runner.create({
         isFixed: true
       });
       Runner.run(runner, engine);// 运行引擎
       Render.run(render);// 运行渲染器
+    },
+    // 角度转弧度
+    convertToRandians(degree) {
+      return degree * (Math.PI / 180);
     },
     initMouse() {
       // 添加鼠标控制事件
@@ -205,7 +189,6 @@ export default {
       Composite.add(engine.world, this.mouseConstraint);
       // 保持鼠标与渲染同步
       render.mouse = this.mouse;
-
     },
     // 陀螺仪
     GetGravity(event) {
@@ -224,20 +207,78 @@ export default {
         gravity.x = Common.clamp(-event.beta, -90, 90) / 90;
         gravity.y = Common.clamp(event.gamma, -90, 90) / 90;
       }
+    },
+    run() {
+      const bodies = Composite.allBodies(engine.world);
+      console.log({bodies})
+      for (let i = 0; i < bodies.length; i++) {
+        const body = bodies[i];
+
+        if (!body.isStatic) {
+          const forceMagnitude = 0.06 * body.mass;
+          console.log({body})
+          // 施加力
+          Body.applyForce(body, body.position, {
+            x: (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([1, -1]),
+            y: -forceMagnitude + Common.random() * -forceMagnitude
+          });
+          // 给与速度
+          // Body.setVelocity(body, {
+          //   x: (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([1, -1]),
+          //   y: -forceMagnitude + Common.random() * -forceMagnitude
+          // })
+        }
+      }
     }
-  }
+  },
 };
 </script>
 
-<style lang="scss">
-.matterDiv {
-  margin: 0;
-  border: 0;
-  width: 100vw;
-  height: 100vw;
+<style lang="scss" scoped>
+.gashapon_machine {
+  width: 240px;
+  height: 311px;
+  margin: auto;
+  display: flex;
+  background: url('http://39.107.231.241:84/ndj/yh_bg.png') center center no-repeat;
+  background-size: 88%;
+  position: relative;
+  user-select: none;
 
-  canvas {
-    //border-radius: 50%;
+  &_canvas {
+    border-radius: 50%;
+    position: absolute;
+    top: 4px;
+    left: 37px;
+    transform-origin: left top;
+  }
+
+  &_bottom {
+    background: url(http://39.107.231.241:84/ndj/yh_bottom.png) center center no-repeat;
+    background-size: 100%;
+    width: 144px;
+    height: 57px;
+    position: absolute;
+    bottom: 142px;
+    left: 45px;
+    z-index: 10;
+  }
+
+  &_result {
+    position: absolute;
+    bottom: 36px;
+    left: 106px;
+
+    img {
+      width: 31px;
+      height: 31px;
+      opacity: 0;
+      transition: opacity 0.3s 1s;
+    }
+
+    .img_show {
+      opacity: 1;
+    }
   }
 }
 </style>
