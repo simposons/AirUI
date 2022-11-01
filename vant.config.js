@@ -83,6 +83,10 @@ module.exports = {
             path: 'matterjs-example',
             title: '物理引擎示例',
           },
+          {
+            path: 'font-animate',
+            title: '字体动画',
+          },
         ],
       },
       {
