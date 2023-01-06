@@ -87,6 +87,10 @@ module.exports = {
             path: 'font-animate',
             title: '字体动画',
           },
+          {
+            path: 'doll-grabbing-machine-css',
+            title: '抓娃娃机-css',
+          },
         ],
       },
       {

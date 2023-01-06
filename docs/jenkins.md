@@ -4,6 +4,10 @@
 ### 参考文档 
 1. [都2022年了，还不用Jenkins自动化部署？](https://juejin.cn/post/7048582881576222734)
 2. [CentetOS7.9 安装Jenkins](https://www.cnblogs.com/Mxy-cnblog/p/16501464.html)
+3. [【Jenkins】基于Windows系统安装Jenkins](https://blog.csdn.net/qq_45392321/article/details/123091040)
+4. [Jenkins---jenkins新增用户且配置权限](https://www.cnblogs.com/qican/p/15533972.html)
+5. [Jenkins查询及自定义工作空间（自由风格项目、maven项目）](http://t.zoukankan.com/chooperman-p-14154927.html)
+6. [Jenkins 修改主目录 JENKINS_HOME](https://www.pudn.com/news/6228da869ddf223e1ad26278.html)
 
 ### jenkins的安装和配置
 
