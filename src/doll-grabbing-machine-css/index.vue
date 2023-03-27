@@ -3,7 +3,7 @@
     <div class="grab">
       <div class="grab_rod_horizontal"></div>
       <div class="grab_rod_vertical" :class="toGrab&&'grab_rod_vertical_move'"></div>
-      <div class="grab_cricle" ref="grabCricle">
+      <div class="grab_cricle">
         <span class="grab_cricle_before"></span>
         <span class="grab_cricle_after"></span>
         <span></span>
@@ -101,8 +101,8 @@ export default {
 $item-space: 80px;
 $item-width: 50px;
 $item-num: 8;
-$start-position: 0px;
-$end-position: 0px - $item-num*$item-width - $item-num*$item-space;
+$start-position: 0;
+$end-position: 0 - $item-num*$item-width - $item-num*$item-space;
 $run-time:10s;
 *{
   box-sizing: border-box;
@@ -159,8 +159,8 @@ $run-time:10s;
   }
 }
 .gifts{
-  &_warp{
-  }
+  // &_warp{
+  // }
   &_list{
     list-style-type: none;
     white-space: nowrap;

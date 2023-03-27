@@ -5,6 +5,3 @@
     </demo-block>
   </demo-section>
 </template>
-<style lang="scss">
-
-</style>

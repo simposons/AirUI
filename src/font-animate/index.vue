@@ -20,6 +20,9 @@
     <div class="tips tip11">陈小希</div>
     <div class="tips tip12">陈小希</div>
   </demo-block>
+  <demo-block title="text-dazi">
+    <div class="tips tip13">陈小希</div>
+  </demo-block>
 </demo-section>
 </template>
 
@@ -43,7 +46,7 @@ export default {
 
 <style lang="scss">
 @function makeLongShadow($color) {
-  $val: 0px 0px $color;
+  $val: 0 0 $color;
 
   @for $i from 1 through 20 {
       $color: fade-out(desaturate($color, 1%), .02);
@@ -67,16 +70,16 @@ export default {
 .tip1{
   font-weight: normal;
   color: #992400;
-  text-shadow: makeLongShadow(hsl(14, 100%, 30%));
+  text-shadow: makelongshadow(hsl(14, 100%, 30%));
 }
 .tip2{
-  text-shadow: 0 -1px 0 #ffffff, 0 1px 0 #2e2e2e, 0 2px 0 #2c2c2c, 0 3px 0 #2a2a2a, 0 4px 0 #282828, 0 5px 0 #262626, 0 6px 0 #242424, 0 7px 0 #222222, 0 8px 0 #202020, 0 9px 0 #1e1e1e, 0 10px 0 #1c1c1c, 0 11px 0 #1a1a1a, 0 12px 0 #181818, 0 13px 0 #161616, 0 14px 0 #141414, 0 15px 0 #121212;
+  text-shadow: 0 -1px 0 #fff, 0 1px 0 #2e2e2e, 0 2px 0 #2c2c2c, 0 3px 0 #2a2a2a, 0 4px 0 #282828, 0 5px 0 #262626, 0 6px 0 #242424, 0 7px 0 #222, 0 8px 0 #202020, 0 9px 0 #1e1e1e, 0 10px 0 #1c1c1c, 0 11px 0 #1a1a1a, 0 12px 0 #181818, 0 13px 0 #161616, 0 14px 0 #141414, 0 15px 0 #121212;
 }
 .tip3{
   color: #202020;
   background-color: #2d2d2d;
   letter-spacing: .1em;
-  text-shadow: -1px -1px 1px #111111, 2px 2px 1px #363636;
+  text-shadow: -1px -1px 1px #111, 2px 2px 1px #363636;
 }
 .tip4{
   background-color: #2d2d2d;
@@ -171,4 +174,16 @@ export default {
   color: #fff;
   text-shadow: 0 0 5px #000;
 }
+.tip13{
+  font: bold 300% Consolas, Monaco, monospace;
+  border-right: .1em solid black;
+  width: 3em;
+  margin: 2em 1em;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: typing 1.5s steps(3, end),
+  blink-caret .5s step-end infinite alternate;
+}
+@keyframes typing { from { width: 0; } }
+@keyframes blink-caret { 50% { border-color: transparent; } }
 </style>

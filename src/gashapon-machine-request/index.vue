@@ -235,7 +235,6 @@ export default {
   user-select: none;
 
   &_canvas {
-
     border-radius: 50%;
     position: absolute;
     top: 4px;

@@ -80,7 +80,7 @@ $animation1: 1.5s;
     width: 100px;
     height: 138px;
     background-color: gold;
-    box-shadow: inset 1em 1em 2em rgb(0 0 0 / 30%), inset 0.2em 0.2em 1em #ffff55;
+    box-shadow: inset 1em 1em 2em rgb(0 0 0 / 30%), inset 0.2em 0.2em 1em #ff5;
     top: 1px;
     opacity:1;
     transition: top $animation1 $animation1,opacity $animation1 $animation1;
@@ -93,11 +93,11 @@ $animation1: 1.5s;
     width: 100px;
     height: 138px;
     background-color: gold;
-    box-shadow: inset 1em 1em 2em rgb(0 0 0 / 30%), inset 0.2em 0.2em 1em #ffff55;
+    box-shadow: inset 1em 1em 2em rgb(0 0 0 / 30%), inset 0.2em 0.2em 1em #ff5;
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
     clip-path: polygon(46% 60%, 64% 36%, 79% 54%, 100% 35%, 100% 100%, 43% 100%, 0 100%, 0 46%, 20% 60%, 30% 38%);
 
-    &:before {
+    &::before {
       content: '';
       position: absolute;
       bottom: 30px;

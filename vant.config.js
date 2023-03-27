@@ -120,6 +120,15 @@ module.exports = {
         ],
       },
       {
+        title: 'vant二次封装组件测试',
+        items: [
+          {
+            path: 'vant-test',
+            title: '',
+          },
+        ],
+      },
+      {
         title: '技术记录',
         items: [
           {

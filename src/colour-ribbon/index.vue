@@ -103,8 +103,8 @@ export default {
     .move-item {
       animation: cicle 2s infinite linear;
       position: absolute;
-      left: 0px;
-      top: 0px;
+      left: 0;
+      top: 0;
     }
 
     @keyframes cicle {
@@ -115,7 +115,7 @@ export default {
 
       10% {
         transform: rotate(30deg);
-        left: 0px;
+        left: 0;
       }
 
       20% {
@@ -125,7 +125,7 @@ export default {
 
       30% {
         transform: rotate(90deg);
-        left: 0px;
+        left: 0;
       }
 
       40% {
@@ -135,7 +135,7 @@ export default {
 
       50% {
         transform: rotate(150deg);
-        left: 0px;
+        left: 0;
       }
 
       60% {
@@ -145,7 +145,7 @@ export default {
 
       70% {
         transform: rotate(210deg);
-        left: 0px;
+        left: 0;
       }
 
       80% {
@@ -155,7 +155,7 @@ export default {
 
       90% {
         transform: rotate(240deg);
-        left: 0px;
+        left: 0;
       }
 
       100% {
@@ -187,26 +187,31 @@ export default {
 
 .spark-1 {
   @extend .spark;
+
   background: #FFE034;
 }
 
 .spark-2 {
   @extend .spark;
+
   background: #2893FF;
 }
 
 .spark-3 {
   @extend .spark;
+
   background: #15E3D1;
 }
 
 .spark-4 {
   @extend .spark;
+
   background: #8A78FD;
 }
 
 .spark-0 {
   @extend .spark;
+
   background: #FFA933;
 }
 </style>
