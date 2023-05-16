@@ -148,6 +148,14 @@ module.exports = {
             path: 'axios',
             title: 'axios解决竞态问题',
           },
+          {
+            path: 'css-svg-canvas',
+            title: '关于前端动画的多种实现方式',
+          },
+          {
+            path: 'svg-png-jpg',
+            title: 'SVG vs PNG vs JPG',
+          },
         ],
       },
     ],
