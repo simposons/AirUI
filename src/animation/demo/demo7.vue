@@ -2,7 +2,7 @@
 <template>
     <div class="svg">
         <animate-section class="animate-section" v-if="flag">
-            <div class="title">timing-function</div>
+            <div class="title">svg动画</div>
             <svg version="1.1" id="svg5" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 70 60"
                 xml:space="preserve">
                 <path class="path1"

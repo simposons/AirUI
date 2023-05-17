@@ -2,12 +2,13 @@
 <template>
     <div>
         <animate-section class="animate-section" v-if="flag">
-            <div class="title">transform</div>
+            <div class="title">timing-function</div>
             <div class="ball animate1" :class="status"></div>
             <div class="ball animate2" :class="status"></div>
             <div class="ball animate3" :class="status"></div>
             <div class="ball animate4" :class="status"></div>
             <div class="ball animate5" :class="status"></div>
+            <div class="ball animate6" :class="status"></div>
         </animate-section>
         <div class="button">
             <button @click="play">{{ button }}</button>
@@ -68,16 +69,16 @@ export default {
     height: 30px;
     border-radius: 50%;
     background: greenyellow;
-    margin: 50px auto;
+    margin: 5px;
 }
 
 
 .animate1 {
-    animation: matrix linear 5s 1 forwards;
+    animation: toLeft linear 5s 1 forwards;
     position: relative;
     &::before{
         position: absolute;
-        content: 'matrix';
+        content: 'linear';
         top: 2px;
         left: 50px;
         width: 100px;
@@ -85,11 +86,11 @@ export default {
 }
 
 .animate2 {
-    animation: translate linear 5s 1 forwards;
+    animation: toLeft ease-in 5s 1 forwards;
     position: relative;
     &::before{
         position: absolute;
-        content: 'translate';
+        content: 'ease-in';
         top: 2px;
         left: 50px;
         width: 100px;
@@ -97,11 +98,11 @@ export default {
 }
 
 .animate3 {
-    animation: scale linear 5s 1 forwards;
+    animation: toLeft ease-out 5s 1 forwards;
     position: relative;
     &::before{
         position: absolute;
-        content: 'scale';
+        content: 'ease-out';
         top: 2px;
         left: 50px;
         width: 100px;
@@ -109,22 +110,33 @@ export default {
 }
 
 .animate4 {
-    animation: rotate linear 5s 1 forwards;
+    animation: toLeft ease-in-out 5s 1 forwards;
     position: relative;
     &::before{
         position: absolute;
-        content: 'rotate';
+        content: 'ease-in-out';
         top: 2px;
         left: 50px;
         width: 100px;
     }
 }
 .animate5 {
-    animation: skew linear 5s 1 forwards;
+    animation: toLeft cubic-bezier(0, 1.1, 0.8, 1) 5s 1 forwards;
     position: relative;
     &::before{
         position: absolute;
-        content: 'skew';
+        content: 'cubic-bezier';
+        top: 2px;
+        left: 50px;
+        width: 100px;
+    }
+}
+.animate6 {
+    animation: toLeft steps(10) 5s 1 forwards ;
+    position: relative;
+    &::before{
+        position: absolute;
+        content: 'steps';
         top: 2px;
         left: 50px;
         width: 100px;
@@ -138,52 +150,13 @@ export default {
 .running {
     animation-play-state: running;
 }
-@keyframes matrix {
-    0% {
-    }
-
-    100% {
-        transform:matrix(1, 2, -1, 1, 80, 80);
-
-    }
-}
-@keyframes translate {
+@keyframes toLeft {
     0% {
         transform: translate(0, 0);
     }
 
     100% {
-        transform: translate(100px, 0);
-
-    }
-}
-@keyframes scale {
-    0% {
-        transform: scale(1);
-    }
-
-    100% {
-        transform: scale(2);
-
-    }
-}
-@keyframes rotate {
-    0% {
-        transform: rotate(0);
-    }
-
-    100% {
-        transform: rotate(360deg);
-
-    }
-}
-@keyframes skew {
-    0% {
-        transform: skew(0,0);;
-    }
-
-    100% {
-        transform: skew(30deg, 20deg);;
+        transform: translate(500px, 0);
 
     }
 }

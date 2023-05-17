@@ -124,7 +124,7 @@ module.exports = {
         items: [
           {
             path: 'vant-test',
-            title: '',
+            title: 'vant组件引用测试',
           },
         ],
       },

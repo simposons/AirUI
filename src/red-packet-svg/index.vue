@@ -143,9 +143,10 @@ export default {
       }
     },
     svgClick(e) {
+      console.log(e)
       const imageType = e.target.id.split('_')[1];
       if (e.target.nodeName === 'image' && imageType === 'click') {
-        this.$el.pauseAnimations()
+        // this.$el.pauseAnimations()
         this.totalCount++;
         this.$emit('countChange', this.totalCount);
         e.target.remove();
