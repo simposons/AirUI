@@ -40,6 +40,10 @@ module.exports = {
             title: '砸金蛋抽奖',
           },
           {
+            path: 'smash-golden-eggs-more',
+            title: '砸金蛋抽奖(华丽)',
+          },
+          {
             path: 'red-packet-svg',
             title: '红包雨抽奖-svg',
           },

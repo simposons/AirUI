@@ -39,6 +39,9 @@ transform: matrix translate scale rotate skew
 1. [前端动画库](http://guowc.github.io/animastore/)
 2. [animate.css](https://animate.style/)
 3. [字体动画](/#/font-animate)
+### 示例
+1. <a href="/#/smash-golden-eggs-more">砸金蛋</a>
+
 ## svg动画
 ### SVG
 `SVG`又称`可缩放矢量图形`
