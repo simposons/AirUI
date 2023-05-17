@@ -2,10 +2,11 @@
 <template>
     <div>
         <animate-section class="animate-section" v-if="flag">
-            <div class="title">iteration-count</div>
+            <div class="title">direction</div>
             <div class="ball animate1" :class="status"></div>
             <div class="ball animate2" :class="status"></div>
             <div class="ball animate3" :class="status"></div>
+            <div class="ball animate4" :class="status"></div>
         </animate-section>
         <div class="button">
             <button @click="play">{{ button }}</button>
@@ -66,15 +67,16 @@ export default {
     height: 30px;
     border-radius: 50%;
     background: greenyellow;
+    margin: 5px;
 }
 
 
 .animate1 {
-    animation: toLeft linear 5s 1;
+    animation: toLeft linear 5s 2 normal ;
     position: relative;
     &::before{
         position: absolute;
-        content: '1';
+        content: 'normal';
         top: 2px;
         left: 50px;
         width: 100px;
@@ -82,25 +84,36 @@ export default {
 }
 
 .animate2 {
-    animation: toLeft linear 5s 2;
+    animation: toLeft linear 5s 2 reverse ;
     position: relative;
     &::before{
         position: absolute;
-        content: '2';
+        content: 'reverse';
         top: 2px;
         left: 50px;
         width: 100px;
     }
 }
 .animate3 {
-    animation: toLeft linear 5s  infinite;
+    animation: toLeft linear 5s  2 alternate ;
     position: relative;
     &::before{
         position: absolute;
-        content: 'infinite';
+        content: 'alternate';
         top: 2px;
         left: 50px;
         width: 100px;
+    }
+}
+.animate4 {
+    animation: toLeft linear 5s  2 alternate-reverse ;
+    position: relative;
+    &::before{
+        position: absolute;
+        content: 'alternate-reverse';
+        top: 2px;
+        left: 50px;
+        width: 200px;
     }
 }
 

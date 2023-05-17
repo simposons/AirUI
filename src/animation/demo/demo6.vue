@@ -61,6 +61,7 @@ export default {
     border-radius: 50%;
     background: greenyellow;
     margin: 50px auto;
+    margin: 5px;
     margin-left: 0;
 }
 
