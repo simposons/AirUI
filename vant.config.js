@@ -12,7 +12,7 @@ module.exports = {
     // 标题
     title: 'AirUI',
     // 图标
-    logo: 'https://fastly.jsdelivr.net/npm/@vant/assets/logo.png',
+    logo: 'http://39.107.231.241:84/avatar.jpg',
     // 左侧导航栏配置
     nav: [
       {
@@ -29,12 +29,33 @@ module.exports = {
         ],
       },
       {
-        title: '基础组件',
+        title: '动画示例组件',
         items: [
           {
-            path: 'demo-button',
-            title: 'DemoButton 按钮',
+            path: 'colour-ribbon',
+            title: '彩带动画',
           },
+          {
+            path: 'frame-by-frame',
+            title: '逐帧动画',
+          },
+          {
+            path: 'proton-engine-example',
+            title: '粒子引擎示例',
+          },
+          {
+            path: 'matterjs-example',
+            title: '物理引擎示例',
+          },
+          {
+            path: 'font-animate',
+            title: '字体动画',
+          },
+        ],
+      },
+      {
+        title:'抽奖游戏示例',
+        items:[
           {
             path: 'smash-golden-eggs',
             title: '砸金蛋抽奖',
@@ -50,10 +71,6 @@ module.exports = {
           {
             path: 'red-packet-css',
             title: '红包雨抽奖-css',
-          },
-          {
-            path: 'colour-ribbon',
-            title: '彩带动画',
           },
           {
             path: 'scrape-off',
@@ -76,35 +93,6 @@ module.exports = {
             title: '摇一摇',
           },
           {
-            path: 'frame-by-frame',
-            title: '逐帧动画',
-          },
-          {
-            path: 'proton-engine-example',
-            title: '粒子引擎示例',
-          },
-          {
-            path: 'matterjs-example',
-            title: '物理引擎示例',
-          },
-          {
-            path: 'font-animate',
-            title: '字体动画',
-          },
-          {
-            path: 'doll-grabbing-machine-css',
-            title: '抓娃娃机-css',
-          },
-        ],
-      },
-      {
-        title: '二次封装组件',
-        items: [
-          {
-            path: 'qrcode',
-            title: '二维码生成',
-          },
-          {
             path: 'lucky-wheels',
             title: '转盘抽奖',
           },
@@ -120,12 +108,24 @@ module.exports = {
             path: 'lucky-slot-machines',
             title: '老虎机抽奖',
           },
-
+        ]
+      },
+      {
+        title: '二次封装组件',
+        items: [
+          {
+            path: 'qrcode',
+            title: '二维码生成',
+          },
         ],
       },
       {
         title: 'vant二次封装组件测试',
         items: [
+          {
+            path: 'demo-button',
+            title: 'DemoButton 按钮',
+          },
           {
             path: 'vant-test',
             title: 'vant组件引用测试',
@@ -138,7 +138,6 @@ module.exports = {
           {
             path: 'vant-cli',
             title: 'vant-cli 搭建',
-            // hideSimulator: true,
           },
           {
             path: 'jenkins',
@@ -153,6 +152,15 @@ module.exports = {
             title: 'axios解决竞态问题',
           },
           {
+            path: 'guoxin-cli',
+            title: 'guoxin-cli脚手架搭建',
+          }
+        ],
+      },
+      {
+        title:'技术分享',
+        items:[
+          {
             path: 'css-svg-canvas',
             title: '关于前端动画的多种实现方式',
           },
@@ -160,8 +168,8 @@ module.exports = {
             path: 'svg-png-jpg',
             title: 'SVG vs PNG vs JPG',
           },
-        ],
-      },
+        ]
+      }
     ],
     // 顶部右侧版本切换
     versions: [
