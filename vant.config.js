@@ -148,6 +148,10 @@ module.exports = {
             title: '目前流行的小程序开发框架对比',
           },
           {
+            path: 'React-cropper',
+            title: 'React-cropper使用',
+          },
+          {
             path: 'axios',
             title: 'axios解决竞态问题',
           },
@@ -167,6 +171,10 @@ module.exports = {
           {
             path: 'svg-png-jpg',
             title: 'SVG vs PNG vs JPG',
+          },
+          {
+            path: 'React-Vue',
+            title: 'React vs Vue',
           },
         ]
       }
